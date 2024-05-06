@@ -1,5 +1,6 @@
 # build output
 dist/
+.direnv
 
 # generated types
 .astro/
@@ -22,3 +23,4 @@ pnpm-debug.log*
 
 # Typescript
 *.tsbuildinfo
+.env*.local
