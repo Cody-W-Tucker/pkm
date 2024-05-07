@@ -16,5 +16,11 @@
     "jsx": "preserve"
   },
   "includes": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "dist", ".vercel"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".vercel",
+    "postcss.config.cjs",
+    "astro.config.mjs"
+  ]
 }
