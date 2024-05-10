@@ -1,0 +1,151 @@
+---
+import { PortableText } from "astro-portabletext";
+import { urlFor } from "../utils/image";
+import type { Ad } from "../utils/sanity";
+
+interface ad {
+  ad: Ad;
+}
+
+const author = {
+  name: "Brokerage Specialists, Inc.",
+  mainImage: '/bsi_logo.svg',
+};
+
+const { ad } = Astro.props;
+---
+
+<div class="facebook-post">
+  {ad.ctaLink && (
+    <div class="landing-page-button">
+      <a href={ad.ctaLink} target="_blank">{ad.cta || 'Landing Page'}</a>
+    </div>
+  )}
+  <div class="facebook-header">
+    <div class="facebook-profile-pic" style={`background-image: url(${author.mainImage})`}></div>
+    <div>
+      <div><strong>{author.name}</strong></div>
+      <div class="facebook-post-details">Sponsored · <i class="fa fa-globe"></i></div>
+    </div>
+  </div>
+  <div class="facebook-post-content">
+    <div class="facebook-post-text">
+      <PortableText value={ad.body} />
+    </div>
+    {
+      ad.mainImage ? (
+        <div
+          class="facebook-post-image"
+          style={`background-image: url(${urlFor(ad.mainImage).width(1200).height(1200).url()})`}
+        ></div>
+      ) : null
+    }
+  </div>
+  <div class="facebook-post-footer">
+    <span class="facebook-button"><i class="fa fa-thumbs-up"></i> Like</span>
+    <span class="facebook-button"><i class="fa fa-comment"></i> Comment</span>
+    <span class="facebook-button"><i class="fa fa-share"></i> Share</span>
+  </div>
+</div>
+
+<style>
+
+.landing-page-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
+
+.landing-page-button a {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.facebook-post {
+  font-family: Arial, sans-serif;
+  border: 1px solid #eee; /* Lighter border */
+  border-radius: 10px;
+  margin: 20px auto;
+  background-color: #fff;
+  overflow: hidden;
+  max-width: 600px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Shadow effect */
+  position: relative;
+}
+
+.facebook-header,
+.facebook-post-footer {
+  padding: 5px 15px;
+}
+
+.facebook-header {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  font-size: .9375rem;
+}
+
+.facebook-profile-pic {
+  box-sizing: border-box;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background-size: contain; /* Scale the image to be fully visible within the div */
+  background-position: center; /* Center the image within the div */
+  background-repeat: no-repeat;
+  margin: 0 10px;
+}
+
+.facebook-post-details {
+  padding-top: 5px;
+  font-size: 0.9em;
+  color: #67696D;
+}
+
+.facebook-post-content {
+  font-size: 1.1em;
+  color: #050505;
+  font-size: .9375rem;
+}
+
+.facebook-post-text {
+  padding: 0 10px;
+  margin: 0 10px;
+}
+
+.facebook-post-image {
+  width: 100%;
+  padding-top: 100%; /* This ensures a square aspect ratio */
+  background-size: cover; /* Change this to 'contain' if you want the entire image to always be visible */
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative; /* This is needed for the next step */
+}
+
+.facebook-post-footer {
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  border-radius: 0%;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+.facebook-button {
+  color: #606060;
+  cursor: pointer;
+}
+
+.facebook-button:hover {
+  text-decoration: underline;
+}
+</style>

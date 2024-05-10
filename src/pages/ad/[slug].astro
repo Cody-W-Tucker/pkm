@@ -4,11 +4,11 @@ import { PortableText } from "astro-portabletext";
 import Layout from "../../layouts/Layout.astro";
 import { formatDate } from "../../utils";
 import { urlFor } from "../../utils/image";
-import { getPost, getPosts } from "../../utils/sanity";
+import { getAd, getAds } from "../../utils/sanity";
 
 export async function getStaticPaths() {
-  const posts = await getPosts();
-  return posts.map((post) => ({
+  const ads = await getAds();
+  return ads.map((post) => ({
     params: { slug: post.slug.current },
   }));
 }
@@ -16,56 +16,55 @@ export async function getStaticPaths() {
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 const { slug } = Astro.params as Params;
 
-const post = await getPost(slug);
+const ad = await getAd(slug);
 ---
 
-<Layout title={post.title!}>
-  <section class="post">
+<Layout title={ad.headline!}>
+  <section class="ad">
     {
-      post.mainImage ? (
+      ad.mainImage ? (
         <img
-          class="post__cover"
-          src={urlFor(post.mainImage).url()}
+          class="ad__cover"
+          src={urlFor(ad.mainImage).url()}
           alt="Cover image"
         />
       ) : (
-        <div class="post__cover--none" />
+        <div class="ad__cover--none" />
       )
     }
-    <div class="post__container">
-      <h1 class="post__title">{post.title}</h1>
-      <p class="post__excerpt">{post.excerpt}</p>
-      <p class="post__date">
-        {formatDate(post._createdAt)}
+    <div class="ad__container">
+      <h1 class="ad__title">{ad.headline}</h1>
+      <p class="ad__date">
+        {formatDate(ad._createdAt)}
       </p>
-      <div class="post__content">
-        <PortableText value={post.body} />
+      <div class="ad__content">
+        <PortableText value={ad.body} />
       </div>
     </div>
   </section>
 </Layout>
 
 <style>
-  .post {
+  .ad {
     width: 100%;
     margin: var(--space-1) 0 var(--space-4);
 
-    & .post__cover,
-    & .post__cover--none {
+    & .ad__cover,
+    & .ad__cover--none {
       width: 100%;
       height: 200px;
       object-fit: cover;
     }
 
-    & .post__cover--none {
+    & .ad__cover--none {
       background: var(--black);
     }
 
-    & .post__container {
+    & .ad__container {
       padding: 0 var(--space-3);
     }
 
-    & .post__content {
+    & .ad__content {
       font-family: var(--font-family-serif);
       font-weight: 400;
       font-size: var(--font-size-4);
@@ -86,7 +85,7 @@ const post = await getPost(slug);
       }
     }
 
-    & .post__title {
+    & .ad__title {
       font-family: var(--font-family-sans);
       font-size: var(--font-size-7);
       line-height: var(--line-height-6);
@@ -94,7 +93,7 @@ const post = await getPost(slug);
       font-weight: 800;
     }
 
-    & .post__excerpt {
+    & .ad__excerpt {
       font-family: var(--font-family-serif);
       font-size: var(--font-size-5);
       line-height: var(--line-height-4);
@@ -102,7 +101,7 @@ const post = await getPost(slug);
       font-weight: 400;
     }
 
-    & .post__date {
+    & .ad__date {
       font-family: var(--font-family-sans);
       font-weight: 600;
       font-size: var(--font-size-1);
@@ -112,34 +111,34 @@ const post = await getPost(slug);
   }
 
   @media (min-width: 800px) {
-    .post {
-      & .post__cover,
-      & .post__cover--none {
+    .ad {
+      & .ad__cover,
+      & .ad__cover--none {
         width: 750px;
         height: 380px;
       }
 
-      & .post__title {
+      & .ad__title {
         font-size: var(--font-size-10);
         line-height: var(--line-height-10);
         margin: var(--space-6) 0 0;
         letter-spacing: -0.025em;
       }
 
-      & .post__excerpt {
+      & .ad__excerpt {
         font-size: var(--font-size-5);
         line-height: var(--line-height-5);
         margin-top: var(--space-3);
         margin-bottom: var(--space-3);
       }
 
-      & .post__date {
+      & .ad__date {
         font-size: var(--font-size-3);
         line-height: var(--line-height-2);
         margin-top: var(--space-0);
       }
 
-      & .post__content {
+      & .ad__content {
         margin-top: var(--space-7);
       }
     }

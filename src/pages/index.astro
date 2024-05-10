@@ -1,14 +1,14 @@
 ---
-import Card from "../components/Card.astro";
+import FacebookPost from "../components/FacebookPost.astro";
 import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
-import { getPosts } from "../utils/sanity";
+import { getAds } from "../utils/sanity";
 
-const posts = await getPosts();
+const ads = await getAds();
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Brokerage Specialists Ad Preview">
   <section>
-    {posts.length ? posts.map((post) => <Card post={post} />) : <Welcome />}
+    {ads.length ? ads.map((ad) => <FacebookPost ad={ad} />) : <Welcome />}
   </section>
 </Layout>
