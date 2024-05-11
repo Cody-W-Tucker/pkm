@@ -1,14 +1,21 @@
 ---
 import FacebookPost from "../components/FacebookPost.astro";
+import GoogleAd from "../components/GoogleAd.astro";
 import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
 import { getAds } from "../utils/sanity";
 
 const ads = await getAds();
+
+const customer = {
+  name: "Brokerage Specialists, Inc.",
+  logo: "/bsi_logo.svg",
+  website: "https://brokeragespecialists.com",
+}
 ---
 
 <Layout title="Brokerage Specialists Ad Preview">
   <section>
-    {ads.length ? ads.map((ad) => <FacebookPost ad={ad} />) : <Welcome />}
+    {ads.length ? ads.map((ad) => <FacebookPost ad={ad} customer={customer} /> <GoogleAd ad={ad} customer={customer} />) : <Welcome />}
   </section>
 </Layout>

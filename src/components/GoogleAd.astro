@@ -1,0 +1,168 @@
+---
+import type { Ad } from "../utils/sanity";
+import { toPlainText } from "astro-portabletext/utils";
+
+interface ad {
+  ad: Ad;
+}
+
+const { ad } = Astro.props;
+const { customer } = Astro.props;
+---
+
+<a href={ad.ctaLink} target="_blank" class="ad-link">
+<div class="google-ad">
+  {ad.ctaLink && (
+    <div class="landing-page-button">
+      <div>{ad.cta || 'Landing Page'}</div>
+    </div>
+  )}
+  <span class="sponsored">Sponsored</span>
+  <div class="customer-details">
+    <div class="logo-wrapper">
+      <img class="logo" src={customer.logo} alt={customer.name} />
+    </div>
+    <div class="name">
+      <span>{customer.name}</span>
+      <span style="font-size: small; color: gray;">{customer.website}</span>
+    </div>
+  </div>
+  <div class="ad-title">
+    <span>{ad.headline || 'Headline'} | {ad.cta || 'Ad Title'}</span>
+  </div>
+  <div class="ad-description">
+    {toPlainText(ad.body)}
+  </div>
+</div>
+</a>
+
+<style>
+  @media (max-width: 600px) {
+  .landing-page-button {
+    display: none;
+  }
+}
+
+.landing-page-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
+
+.landing-page-button div {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+  .ad-link:hover .ad-title span {
+    text-decoration: underline;
+  }
+
+  .ad-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .customer-details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .customer-details .name {
+    font-family: Roboto,arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.58;
+    color: #202124;
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .customer-details .logo {
+    height: 18px;
+    width: 18px;
+  }
+
+  .customer-details .logo-wrapper {
+    font-family: Roboto,arial,sans-serif;
+    font-size: 14px;
+    white-space: nowrap;
+    color: #202124;
+    -webkit-tap-highlight-color: rgba(0,0,0,.1);
+    line-height: normal;
+    background-color: #f1f3f4;
+    border: 1px solid #ecedef;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 26px;
+    width: 26px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+
+  .google-ad {
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 0;
+    font-family: Arial, sans-serif;
+    max-width: 65ch;
+    margin: auto;
+    position: relative;
+  }
+
+  .google-ad .sponsored {
+    background-color: transparent;
+    color: #202124;
+    display: inline-block;
+    font-family: Roboto, arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 0px;
+    white-space: nowrap;
+    border-radius: 3px;
+    margin-right: 8px;
+    margin-bottom: 6px;
+    line-height: 20px;
+  }
+  
+  .google-ad .ad-title {
+    font-family: Roboto,arial,sans-serif;
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  .google-ad .ad-title span {
+    text-decoration: none;
+    color: #1a0dab;
+  }
+  
+  .google-ad .ad-url {
+    color: #006621;
+    font-size: 14px;
+  }
+  
+  .google-ad .ad-description {
+    font-family: Roboto,arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.58;
+    color: #4d5156;
+    white-space: nowrap; /* Prevents the text from wrapping onto the next line */
+    overflow: hidden; /* Hides the text that overflows the container */
+    text-overflow: ellipsis; /* Adds an ellipsis (...) when the text overflows */
+  }
+  </style>

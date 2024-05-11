@@ -7,12 +7,8 @@ interface ad {
   ad: Ad;
 }
 
-const author = {
-  name: "Brokerage Specialists, Inc.",
-  mainImage: '/bsi_logo.svg',
-};
-
 const { ad } = Astro.props;
+const { customer } = Astro.props;
 ---
 
 <div class="facebook-post">
@@ -22,9 +18,9 @@ const { ad } = Astro.props;
     </div>
   )}
   <div class="facebook-header">
-    <div class="facebook-profile-pic" style={`background-image: url(${author.mainImage})`}></div>
+    <div class="facebook-profile-pic" style={`background-image: url(${customer.logo})`}></div>
     <div>
-      <div><strong>{author.name}</strong></div>
+      <div><strong>{customer.name}</strong></div>
       <div class="facebook-post-details">Sponsored · <i class="fa fa-globe"></i></div>
     </div>
   </div>
